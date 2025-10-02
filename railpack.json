@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 {
-  "start": "python bot.py"
-=======
-{
-  "start": "python bot.py"
->>>>>>> a2e97fb431ec62e128b82670f3ea1aa20d4979ec
+  "name": "tradingbot",
+  "description": "Trading Bot with FastAPI and Binance",
+  "scripts": {
+    "start": "python bot.py"
+  }
 }
