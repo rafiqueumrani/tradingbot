@@ -6768,3 +6768,22 @@ NameError: name 'print_startup_summary' is not defined
 2025-10-02 21:24:30 - trading_bot - INFO - 🌐 Starting FastAPI server on http://0.0.0.0:8000
 2025-10-02 21:24:30 - trading_bot - INFO - ⏳ Trading Bot is now ACTIVE with FRESH CROSSOVER SYSTEM...
 2025-10-02 21:24:30 - trading_bot - INFO - 📍 Use Ctrl+C to stop the bot
+2025-10-02 21:27:29 - trading_bot - INFO - [DRY-RUN] SELL 50.076784 XRPUSDT
+2025-10-02 21:27:29 - trading_bot - INFO - 🎯 TP1 Hit for XRPUSDT! Closed 50.076784 (30.0%) - SL moved to break-even
+2025-10-02 21:30:11 - trading_bot - INFO - ✅ FRESH BUY CROSSOVER detected for DOTUSDT
+2025-10-02 21:30:11 - trading_bot - INFO - ✅ Fresh crossover confirmation 1/4 for DOTUSDT
+2025-10-02 21:30:42 - trading_bot - INFO - ✅ FRESH BUY CROSSOVER detected for DOTUSDT
+2025-10-02 21:30:42 - trading_bot - INFO - ✅ Fresh crossover confirmation 2/4 for DOTUSDT
+2025-10-02 21:31:13 - trading_bot - INFO - ✅ FRESH BUY CROSSOVER detected for DOTUSDT
+2025-10-02 21:31:13 - trading_bot - INFO - ✅ Fresh crossover confirmation 3/4 for DOTUSDT
+2025-10-02 21:31:44 - trading_bot - INFO - ✅ FRESH BUY CROSSOVER detected for DOTUSDT
+2025-10-02 21:31:44 - trading_bot - INFO - ✅ Fresh crossover confirmation 4/4 for DOTUSDT
+2025-10-02 21:31:44 - trading_bot - INFO - 🎯 ENTERING BUY trade for DOTUSDT after 4 FRESH crossover confirmations
+2025-10-02 21:31:44 - trading_bot - INFO - [DRY-RUN] BUY 117.370892 DOTUSDT
+2025-10-02 21:31:44 - trading_bot - INFO - Successfully loaded 5 trades from CSV
+2025-10-02 21:31:44 - trading_bot - INFO - Successfully loaded 5 trades from CSV
+2025-10-02 21:31:44 - trading_bot - INFO - Successfully appended trade #5 to CSV
+2025-10-02 21:31:44 - trading_bot - INFO - Logged OPEN trade #5 for DOTUSDT long at 4.26
+2025-10-02 21:31:44 - trading_bot - INFO - 📊 LONG SL Calculated for DOTUSDT: EMA50=4.2184, ATR_SL=4.2194, Final_SL=4.2184
+2025-10-02 21:31:44 - trading_bot - INFO - 📊 LONG SL Calculated for DOTUSDT: EMA50=4.2184, ATR_SL=4.2194, Final_SL=4.2184
+2025-10-02 21:31:44 - trading_bot - INFO - ⏳ Cooldown period started for DOTUSDT

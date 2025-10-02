@@ -125,6 +125,48 @@
       "lowest_price": "0.2570",
       "trailing_distance_percent": 0.01,
       "trailing_quantity": "389.089919"
+    },
+    "DOTUSDT": {
+      "entry_price": "4.2600",
+      "side": "long",
+      "total_quantity": "117.370892",
+      "remaining_quantity": "117.370892",
+      "trade_num": 5,
+      "entry_time": "2025-10-02T21:31:44.697594",
+      "signal": "BUY",
+      "sl": "4.2184",
+      "tp1": "4.3026",
+      "tp2": "4.3452",
+      "tp3": "4.3878",
+      "tp_targets": {
+        "tp1": {
+          "price": "4.3026",
+          "hit": false,
+          "level": 1,
+          "quantity": 35.2112676056338,
+          "closed": false
+        },
+        "tp2": {
+          "price": "4.3452",
+          "hit": false,
+          "level": 2,
+          "quantity": 29.342723004694836,
+          "closed": false
+        },
+        "tp3": {
+          "price": "4.3878",
+          "hit": false,
+          "level": 3,
+          "quantity": 29.342723004694836,
+          "closed": false
+        }
+      },
+      "trailing_active": false,
+      "trailing_triggered": false,
+      "highest_price": "4.2600",
+      "lowest_price": "4.2600",
+      "trailing_distance_percent": 0.01,
+      "trailing_quantity": "23.474178"
     }
   },
   "stats": {
