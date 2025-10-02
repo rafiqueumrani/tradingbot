@@ -1,0 +1,109 @@
+{
+  "BTCUSDT": {
+    "position": "long",
+    "entry": 101.77668364017931,
+    "atr": 1.1453366126238802,
+    "sl": 101.77668364017931,
+    "tp_levels": [
+      103.49468855911513,
+      105.21269347805095,
+      106.93069839698677
+    ],
+    "tp1_hit": true
+  },
+  "SOLUSDT": {
+    "position": "long",
+    "entry": 98.29348604090251,
+    "atr": 1.0806573754330446,
+    "sl": 95.5918426023199,
+    "tp_levels": [
+      99.91447210405208,
+      101.53545816720164,
+      103.15644423035121
+    ]
+  },
+  "BNBUSDT": {
+    "position": "long",
+    "entry": 114.62879243089537,
+    "atr": 1.1858663285774662,
+    "sl": 111.66412660945171,
+    "tp_levels": [
+      116.40759192376157,
+      118.18639141662777,
+      119.96519090949397
+    ]
+  },
+  "ADAUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "below"
+  },
+  "DOGEUSDT": {
+    "position": "long",
+    "entry": 110.53264522651298,
+    "atr": 1.0561931163442506,
+    "sl": 107.89216243565235,
+    "tp_levels": [
+      112.11693490102935,
+      113.70122457554574,
+      115.2855142500621
+    ]
+  },
+  "ETHUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "below",
+    "sl": "4050.53428571",
+    "tp": "4516.31785714"
+  },
+  "XRPUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "below"
+  },
+  "PEPEUSDT": {
+    "position": "long",
+    "entry": 95.01002497839738,
+    "atr": 0.8881800803978693,
+    "sl": 95.01002497839738,
+    "tp_levels": [
+      96.34229509899419,
+      97.67456521959099,
+      99.00683534018779
+    ],
+    "tp1_hit": true
+  },
+  "TRXUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "above"
+  },
+  "XLMUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "below"
+  },
+  "SUIUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "above"
+  },
+  "AVAXUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "above"
+  },
+  "LINKUSDT": {
+    "open": false,
+    "seen_after_start": true,
+    "must_wait_for_next_cross": true,
+    "init_ema_relation": "above"
+  }
+}

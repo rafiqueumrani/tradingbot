@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+python-binance>=1.0.19
+requests
+pandas
+numpy
+python-dotenv

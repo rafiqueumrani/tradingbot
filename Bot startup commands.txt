@@ -1,0 +1,25 @@
+# Test health checks
+python bot.py --check
+
+# Run backtest
+python bot.py --backtest BTCUSDT
+
+# Start trading (first 4 symbols)
+python bot.py
+
+# Start trading all symbols
+python bot.py --all
+
+# Run with specific symbol
+python bot.py --symbol BTCUSDT
+
+cd /d C:\Users\Rafique\tradingbot
+call venv\Scripts\activate
+python bot_dashboard.py
+start http://127.0.0.1:8001
+
+cd /d C:\Users\Rafique\tradingbot
+call venv\Scripts\activate
+python bot.py
+python bot.py --clear-history
+
