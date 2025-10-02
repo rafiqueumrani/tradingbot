@@ -1,7 +1,0 @@
-{
-  "name": "tradingbot",
-  "description": "Trading Bot with FastAPI and Binance",
-  "scripts": {
-    "start": "python bot.py"
-  }
-}
