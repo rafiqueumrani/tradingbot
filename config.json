@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 {
   "IMAP_HOST": "imap.gmail.com",
   "IMAP_PORT": 993,
   "EMAIL": "umranirafiquebaloch@gmail.com",
   "PASSWORD": "cipp jkfc gprm slke"
 }
+=======
+{
+  "IMAP_HOST": "imap.gmail.com",
+  "IMAP_PORT": 993,
+  "EMAIL": "umranirafiquebaloch@gmail.com",
+  "PASSWORD": "cipp jkfc gprm slke"
+}
+>>>>>>> a2e97fb431ec62e128b82670f3ea1aa20d4979ec

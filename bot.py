@@ -1,9 +1,10 @@
 # bot.py
 """
 COMPLETE FIXED VERSION - FRESH EMA CROSSOVER + PROFIT DISTRIBUTION
-- Fixed: All connection issues with proper error handling
-- Added: Internet fallback mechanism
-- Enhanced: Safe trading without API dependency
+- Fixed: TP1 partial closing issue
+- Fixed: Dashboard real-time updates
+- Fixed: SL/TP tracking properly
+- Fixed: Railway PORT configuration
 """
 
 import os
@@ -104,6 +105,9 @@ DRY_RUN = _env_bool("DRY_RUN", "True")
 CHECK_INTERVAL = int(os.getenv("CHECK_INTERVAL", 30))
 TRADE_USDT = float(os.getenv("TRADE_USDT", 500.0))
 
+# ✅ FIXED: Railway PORT configuration
+PORT = int(os.getenv("PORT", 8000))
+
 EMA_FAST = 9
 EMA_SLOW = 21
 EMA_MID = 50
@@ -178,6 +182,7 @@ if FASTAPI_AVAILABLE:
                     button:hover { background: #00cc00; }
                     .profit { color: #00ff00; }
                     .loss { color: #ff4444; }
+                    .tp-hit { background: #00ff00; color: black; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
                 </style>
             </head>
             <body>
@@ -243,6 +248,7 @@ if FASTAPI_AVAILABLE:
                                     <p>Symbols: ${stats.symbols_count || 0}</p>
                                     <p>Dry Run: ${stats.dry_run ? 'Yes' : 'No'}</p>
                                     <p>Confirmations: ${stats.confirmations || 0}</p>
+                                    <p>Open Trades: ${stats.open_trades_count || 0}</p>
                                 </div>
                             `;
                             
@@ -252,8 +258,12 @@ if FASTAPI_AVAILABLE:
                                     <div class="trade-card ${trade.side}">
                                         <h3>${trade.symbol} - ${trade.side.toUpperCase()} #${trade.trade_num}</h3>
                                         <p>Entry: ${trade.entry_price} | Current: ${trade.current_price || 'N/A'}</p>
-                                        <p>SL: ${trade.sl} | TP1: ${trade.tp1} | TP2: ${trade.tp2} | TP3: ${trade.tp3}</p>
                                         <p>Remaining: ${trade.remaining_quantity} | Trailing: ${trade.trailing_active ? 'Active' : 'Inactive'}</p>
+                                        <p>SL: ${trade.sl} 
+                                           ${trade.tp1_hit ? '<span class="tp-hit">TP1✓</span>' : `TP1: ${trade.tp1}`} 
+                                           ${trade.tp2_hit ? '<span class="tp-hit">TP2✓</span>' : `TP2: ${trade.tp2}`} 
+                                           ${trade.tp3_hit ? '<span class="tp-hit">TP3✓</span>' : `TP3: ${trade.tp3}`}</p>
+                                        ${trade.partial_profit ? `<p class="profit">💰 Partial Profit: ${trade.partial_profit} USDT</p>` : ''}
                                     </div>
                                 `).join('') : '<p>No open trades</p>';
                             document.getElementById('open-trades').innerHTML = openTradesHtml;
@@ -344,6 +354,8 @@ if FASTAPI_AVAILABLE:
             
             for symbol, trade in open_trades.items():
                 current_price = get_latest_price(symbol)
+                tp_targets = trade.get("tp_targets", {})
+                
                 result.append({
                     "symbol": symbol,
                     "side": trade.get("side", ""),
@@ -351,14 +363,18 @@ if FASTAPI_AVAILABLE:
                     "current_price": f"{current_price:.4f}" if current_price else "N/A",
                     "quantity": trade.get("total_quantity", ""),
                     "trade_num": trade.get("trade_num", 0),
-                    "pnl": 0,  # Simplified for dashboard
+                    "pnl": 0,
                     "entry_time": trade.get("entry_time", ""),
                     "sl": trade.get("sl", ""),
                     "tp1": trade.get("tp1", ""),
                     "tp2": trade.get("tp2", ""),
                     "tp3": trade.get("tp3", ""),
+                    "tp1_hit": tp_targets.get("tp1", {}).get("hit", False),
+                    "tp2_hit": tp_targets.get("tp2", {}).get("hit", False),
+                    "tp3_hit": tp_targets.get("tp3", {}).get("hit", False),
                     "remaining_quantity": trade.get("remaining_quantity", ""),
-                    "trailing_active": trade.get("trailing_active", False)
+                    "trailing_active": trade.get("trailing_active", False),
+                    "partial_profit": trade.get("partial_profit", "")
                 })
             
             return result
@@ -384,7 +400,7 @@ if FASTAPI_AVAILABLE:
                     "symbol": trade.get("Symbol", ""),
                     "side": trade.get("Side", ""),
                     "entry_price": trade.get("Price", ""),
-                    "exit_price": trade.get("Price", ""),  # Simplified
+                    "exit_price": trade.get("Price", ""),
                     "pnl": trade.get("Net P&L", "0"),
                     "time": trade.get("Date/Time", "")
                 })
@@ -945,6 +961,7 @@ def set_multi_tp_profit_distribution(symbol, entry_price, side, df, total_quanti
         logger.error(f"Error setting multi-TP with profit distribution: {e}")
         return None, None, None
 
+# ✅ FIXED: TP1 partial closing with proper profit calculation
 def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
     """Check and update TP targets with partial position closing"""
     try:
@@ -952,6 +969,7 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
         entry_price = float(trade_info.get("entry_price", 0))
         tp_targets = trade_info.get("tp_targets", {})
         remaining_quantity = float(trade_info.get("remaining_quantity", 0))
+        total_quantity = float(trade_info.get("total_quantity", 0))
         
         state = load_state()
         if symbol not in state.get("open_trades", {}):
@@ -968,13 +986,28 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
                 # TP1 hit - close 30% position
                 tp1_quantity = float(tp_targets["tp1"]["quantity"])
                 if place_order("sell" if side == "long" else "buy", symbol, tp1_quantity):
+                    # Calculate profit for TP1
+                    if side == "long":
+                        tp1_profit = (current_price - entry_price) * tp1_quantity
+                    else:
+                        tp1_profit = (entry_price - current_price) * tp1_quantity
+                    
                     trade_data["tp_targets"]["tp1"]["hit"] = True
                     trade_data["tp_targets"]["tp1"]["closed"] = True
                     trade_data["remaining_quantity"] = f"{remaining_quantity - tp1_quantity:.6f}"
                     # Move SL to entry (break-even)
                     trade_data["sl"] = f"{entry_price:.4f}"
+                    # Store partial profit
+                    trade_data["partial_profit"] = f"+{tp1_profit:.2f} USDT"
                     updated = True
-                    logger.info(f"🎯 TP1 Hit for {symbol}! Closed {tp1_quantity:.6f} ({TP1_CLOSE_PERCENT*100}%) - SL moved to break-even")
+                    
+                    # Log the partial close with profit
+                    logger.info(f"🎯 TP1 Hit for {symbol}! Closed {tp1_quantity:.6f} ({TP1_CLOSE_PERCENT*100}%)")
+                    logger.info(f"💰 Partial Profit: {tp1_profit:.2f} USDT - SL moved to break-even")
+                    
+                    # Log the partial close in CSV
+                    log_partial_close(symbol, side, entry_price, current_price, tp1_quantity, 
+                                    trade_data.get("trade_num", 0), "TP1", tp1_profit)
         
         # Check TP2  
         elif not tp_targets.get("tp2", {}).get("hit", False) and tp_targets.get("tp1", {}).get("hit", False):
@@ -984,14 +1017,29 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
                 # TP2 hit - close 25% position
                 tp2_quantity = float(tp_targets["tp2"]["quantity"])
                 if place_order("sell" if side == "long" else "buy", symbol, tp2_quantity):
+                    # Calculate profit for TP2
+                    if side == "long":
+                        tp2_profit = (current_price - entry_price) * tp2_quantity
+                    else:
+                        tp2_profit = (entry_price - current_price) * tp2_quantity
+                    
                     trade_data["tp_targets"]["tp2"]["hit"] = True
                     trade_data["tp_targets"]["tp2"]["closed"] = True
                     trade_data["remaining_quantity"] = f"{remaining_quantity - tp2_quantity:.6f}"
                     # Move SL to TP1 level
                     tp1_price = float(tp_targets["tp1"]["price"])
                     trade_data["sl"] = f"{tp1_price:.4f}"
+                    # Update partial profit
+                    current_partial = float(trade_data.get("partial_profit", "0").replace("+", "").replace(" USDT", ""))
+                    trade_data["partial_profit"] = f"+{current_partial + tp2_profit:.2f} USDT"
                     updated = True
-                    logger.info(f"🎯 TP2 Hit for {symbol}! Closed {tp2_quantity:.6f} ({TP2_CLOSE_PERCENT*100}%) - SL moved to TP1")
+                    
+                    logger.info(f"🎯 TP2 Hit for {symbol}! Closed {tp2_quantity:.6f} ({TP2_CLOSE_PERCENT*100}%)")
+                    logger.info(f"💰 Additional Profit: {tp2_profit:.2f} USDT - SL moved to TP1")
+                    
+                    # Log the partial close in CSV
+                    log_partial_close(symbol, side, entry_price, current_price, tp2_quantity,
+                                    trade_data.get("trade_num", 0), "TP2", tp2_profit)
         
         # Check TP3
         elif not tp_targets.get("tp3", {}).get("hit", False) and tp_targets.get("tp2", {}).get("hit", False):
@@ -1001,6 +1049,12 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
                 # TP3 hit - close 25% position and activate trailing
                 tp3_quantity = float(tp_targets["tp3"]["quantity"])
                 if place_order("sell" if side == "long" else "buy", symbol, tp3_quantity):
+                    # Calculate profit for TP3
+                    if side == "long":
+                        tp3_profit = (current_price - entry_price) * tp3_quantity
+                    else:
+                        tp3_profit = (entry_price - current_price) * tp3_quantity
+                    
                     trade_data["tp_targets"]["tp3"]["hit"] = True
                     trade_data["tp_targets"]["tp3"]["closed"] = True
                     trade_data["remaining_quantity"] = f"{remaining_quantity - tp3_quantity:.6f}"
@@ -1008,9 +1062,18 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
                     tp2_price = float(tp_targets["tp2"]["price"])
                     trade_data["sl"] = f"{tp2_price:.4f}"
                     trade_data["trailing_active"] = True
+                    # Update partial profit
+                    current_partial = float(trade_data.get("partial_profit", "0").replace("+", "").replace(" USDT", ""))
+                    trade_data["partial_profit"] = f"+{current_partial + tp3_profit:.2f} USDT"
                     updated = True
+                    
                     logger.info(f"🎯 TP3 Hit for {symbol}! Closed {tp3_quantity:.6f} ({TP3_CLOSE_PERCENT*100}%)")
+                    logger.info(f"💰 Additional Profit: {tp3_profit:.2f} USDT")
                     logger.info(f"🚀 Trailing stop ACTIVATED for remaining {trade_data['remaining_quantity']} {symbol}")
+                    
+                    # Log the partial close in CSV
+                    log_partial_close(symbol, side, entry_price, current_price, tp3_quantity,
+                                    trade_data.get("trade_num", 0), "TP3", tp3_profit)
         
         if updated:
             save_state(state)
@@ -1019,6 +1082,34 @@ def check_tp_targets_with_partial_close(symbol, current_price, trade_info):
     except Exception as e:
         logger.error(f"Error checking TP targets with partial close: {e}")
         return False
+
+# ✅ NEW: Function to log partial closes in CSV
+def log_partial_close(symbol, side, entry_price, exit_price, quantity, trade_num, tp_level, profit):
+    """Log partial TP closes in CSV"""
+    try:
+        row = {
+            "Trade #": trade_num,
+            "Symbol": symbol.replace('USDT',''),
+            "Side": side.upper(),
+            "Type": f"{symbol} {side.upper()} - {tp_level}",
+            "Date/Time": datetime.now().strftime("%b %d, %Y, %H:%M"),
+            "Signal": f"Partial Close ({tp_level})",
+            "Price": f"{exit_price:.8f}",
+            "Position size": f"{quantity:.6f} ({round(quantity*exit_price,2):.2f} USDT)",
+            "Net P&L": f"{profit:+.2f} USDT",
+            "Run-up": "0",
+            "Drawdown": "0",
+            "Cumulative P&L": ""
+        }
+        
+        success = append_trade_row(row)
+        if success:
+            logger.info(f"Logged PARTIAL CLOSE for {symbol} {tp_level}: {profit:+.2f} USDT")
+        else:
+            logger.error(f"Failed to log partial close for {symbol}")
+            
+    except Exception as e:
+        logger.error(f"Error logging partial close: {e}")
 
 def update_trailing_stop(symbol, current_price, trade_info):
     """Update trailing stop after TP3 hit"""
@@ -1525,14 +1616,15 @@ if __name__ == "__main__":
             logger.error(f"❌ Error starting trading bots: {e}")
             exit(1)
 
-        # Start API server only if FastAPI is available
+        # ✅ FIXED: Railway PORT configuration for FastAPI
         if FASTAPI_AVAILABLE:
-            logger.info("🌐 Starting FastAPI server on http://0.0.0.0:8000")
+            logger.info(f"🌐 Starting FastAPI server on http://0.0.0.0:{PORT}")
             logger.info("⏳ Trading Bot is now ACTIVE with FRESH CROSSOVER SYSTEM...")
             logger.info("📍 Use Ctrl+C to stop the bot")
             
             try:
-                uvicorn.run(app, host="0.0.0.0", port=8000, log_level="error")
+                # ✅ FIXED: Use Railway PORT environment variable
+                uvicorn.run(app, host="0.0.0.0", port=PORT, log_level="error")
             except KeyboardInterrupt:
                 logger.info("👋 Bot stopped by user (Ctrl+C)")
             except Exception as e:
