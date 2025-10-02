@@ -1,48 +1,5 @@
 {
-  "open_trades": {
-    "XLMUSDT": {
-      "entry_price": "0.4040",
-      "side": "long",
-      "total_quantity": "1237.623762",
-      "remaining_quantity": "1237.623762",
-      "trade_num": 1,
-      "entry_time": "2025-10-02T21:47:11.894836",
-      "signal": "BUY",
-      "sl": "0.4007",
-      "tp1": "0.4080",
-      "tp2": "0.4121",
-      "tp3": "0.4161",
-      "tp_targets": {
-        "tp1": {
-          "price": "0.4080",
-          "hit": false,
-          "level": 1,
-          "quantity": 371.2871287128712,
-          "closed": false
-        },
-        "tp2": {
-          "price": "0.4121",
-          "hit": false,
-          "level": 2,
-          "quantity": 309.40594059405936,
-          "closed": false
-        },
-        "tp3": {
-          "price": "0.4161",
-          "hit": false,
-          "level": 3,
-          "quantity": 309.40594059405936,
-          "closed": false
-        }
-      },
-      "trailing_active": false,
-      "trailing_triggered": false,
-      "highest_price": "0.4040",
-      "lowest_price": "0.4040",
-      "trailing_distance_percent": 0.01,
-      "trailing_quantity": "247.524752"
-    }
-  },
+  "open_trades": {},
   "stats": {
     "long": {
       "total": 0,

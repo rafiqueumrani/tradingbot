@@ -7340,3 +7340,112 @@ NameError: name 'print_startup_summary' is not defined
 2025-10-02 22:35:58 - trading_bot - INFO - 🌐 Starting FastAPI server on http://0.0.0.0:8000
 2025-10-02 22:35:58 - trading_bot - INFO - ⏳ Trading Bot is now ACTIVE with FRESH CROSSOVER SYSTEM...
 2025-10-02 22:35:58 - trading_bot - INFO - 📍 Use Ctrl+C to stop the bot
+2025-10-03 01:14:48 - trading_bot - INFO - 🤖 Trading Bot Starting with FRESH EMA CROSSOVER SYSTEM...
+2025-10-03 01:14:51 - trading_bot - INFO - ✅ Binance client initialized successfully
+2025-10-03 01:14:51 - trading_bot - INFO - Required files ensured
+2025-10-03 01:14:51 - trading_bot - INFO - 📂 Loaded state with 1 open trades
+2025-10-03 01:14:51 - trading_bot - INFO - 🚀 === Trading Bot Startup Summary ===
+2025-10-03 01:14:51 - trading_bot - INFO -    STRATEGY: FRESH EMA CROSSOVER
+2025-10-03 01:14:51 - trading_bot - INFO -    CONFIRMATION SYSTEM: 4 fresh crossover confirmations required
+2025-10-03 01:14:51 - trading_bot - INFO -    RISK-REWARD RATIO: 1:2.0
+2025-10-03 01:14:51 - trading_bot - INFO -    PROFIT DISTRIBUTION:
+2025-10-03 01:14:51 - trading_bot - INFO -      - TP1: 1.0% profit - Close 30.0% position
+2025-10-03 01:14:51 - trading_bot - INFO -      - TP2: 2.0% profit - Close 25.0% position
+2025-10-03 01:14:51 - trading_bot - INFO -      - TP3: 3.0% profit - Close 25.0% position
+2025-10-03 01:14:51 - trading_bot - INFO -      - Trailing: 20.0% position with 1.0% trailing
+2025-10-03 01:14:51 - trading_bot - INFO -    TRAILING STOP: Activates after TP3, follows price with 1% distance
+2025-10-03 01:14:51 - trading_bot - INFO -    Symbols: 14
+2025-10-03 01:14:51 - trading_bot - INFO -    Dry Run: True
+2025-10-03 01:14:51 - trading_bot - INFO -    Binance Connected: True
+2025-10-03 01:14:51 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for SOLUSDT
+2025-10-03 01:14:51 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for SOLUSDT
+2025-10-03 01:14:52 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for BNBUSDT
+2025-10-03 01:14:52 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for BNBUSDT
+2025-10-03 01:14:53 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for BTCUSDT
+2025-10-03 01:14:53 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for BTCUSDT
+2025-10-03 01:14:54 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for ETHUSDT
+2025-10-03 01:14:54 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for ETHUSDT
+2025-10-03 01:14:55 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for XRPUSDT
+2025-10-03 01:14:55 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for XRPUSDT
+2025-10-03 01:14:56 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for ADAUSDT
+2025-10-03 01:14:56 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for ADAUSDT
+2025-10-03 01:14:57 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for DOGEUSDT
+2025-10-03 01:14:57 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for DOGEUSDT
+2025-10-03 01:14:58 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for PEPEUSDT
+2025-10-03 01:14:58 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for PEPEUSDT
+2025-10-03 01:14:59 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for LINKUSDT
+2025-10-03 01:14:59 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for LINKUSDT
+2025-10-03 01:15:00 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for XLMUSDT
+2025-10-03 01:15:00 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for XLMUSDT
+2025-10-03 01:15:01 - trading_bot - INFO - [DRY-RUN] SELL 371.287129 XLMUSDT
+2025-10-03 01:15:01 - trading_bot - INFO - 🎯 TP1 Hit for XLMUSDT! Closed 371.287129 (30.0%)
+2025-10-03 01:15:01 - trading_bot - INFO - 💰 Partial Profit: 2.41 USDT - SL moved to break-even
+2025-10-03 01:15:01 - trading_bot - INFO - Successfully loaded 13 trades from CSV
+2025-10-03 01:15:01 - trading_bot - INFO - Successfully appended trade #1 to CSV
+2025-10-03 01:15:01 - trading_bot - INFO - Logged PARTIAL CLOSE for XLMUSDT TP1: +2.41 USDT
+2025-10-03 01:15:01 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for AVAXUSDT
+2025-10-03 01:15:01 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for AVAXUSDT
+2025-10-03 01:15:02 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for DOTUSDT
+2025-10-03 01:15:02 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for DOTUSDT
+2025-10-03 01:15:03 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for OPUSDT
+2025-10-03 01:15:03 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for OPUSDT
+2025-10-03 01:15:04 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for TRXUSDT
+2025-10-03 01:15:04 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for TRXUSDT
+2025-10-03 01:15:05 - trading_bot - INFO - ✅ Started 14 trading bots with FRESH CROSSOVER Strategy
+2025-10-03 01:15:05 - trading_bot - INFO - 🌐 Starting FastAPI server on http://0.0.0.0:8000
+2025-10-03 01:15:05 - trading_bot - INFO - ⏳ Trading Bot is now ACTIVE with FRESH CROSSOVER SYSTEM...
+2025-10-03 01:15:05 - trading_bot - INFO - 📍 Use Ctrl+C to stop the bot
+2025-10-03 01:31:38 - trading_bot - ERROR - Error getting latest price for BNBUSDT: HTTPSConnectionPool(host='testnet.binance.vision', port=443): Read timed out. (read timeout=10)
+2025-10-03 01:31:38 - trading_bot - ERROR - Error getting latest price for ADAUSDT: HTTPSConnectionPool(host='testnet.binance.vision', port=443): Read timed out. (read timeout=10)
+2025-10-03 01:31:39 - trading_bot - ERROR - Klines fetch error for LINKUSDT: HTTPSConnectionPool(host='testnet.binance.vision', port=443): Read timed out. (read timeout=10) - using mock data
+2025-10-03 01:31:42 - trading_bot - ERROR - Klines fetch error for XLMUSDT: HTTPSConnectionPool(host='testnet.binance.vision', port=443): Read timed out. (read timeout=10) - using mock data
+2025-10-03 01:33:13 - trading_bot - ERROR - Klines fetch error for DOGEUSDT: HTTPSConnectionPool(host='testnet.binance.vision', port=443): Read timed out. (read timeout=10) - using mock data
+2025-10-03 01:41:42 - trading_bot - INFO - 🤖 Trading Bot Starting with FRESH EMA CROSSOVER SYSTEM...
+2025-10-03 01:41:45 - trading_bot - INFO - ✅ Binance client initialized successfully
+2025-10-03 01:41:45 - trading_bot - INFO - Required files ensured
+2025-10-03 01:41:45 - trading_bot - INFO - 📂 Loaded state with 1 open trades
+2025-10-03 01:41:45 - trading_bot - INFO - 🚀 === Trading Bot Startup Summary ===
+2025-10-03 01:41:45 - trading_bot - INFO -    STRATEGY: FRESH EMA CROSSOVER
+2025-10-03 01:41:45 - trading_bot - INFO -    CONFIRMATION SYSTEM: 4 fresh crossover confirmations required
+2025-10-03 01:41:45 - trading_bot - INFO -    RISK-REWARD RATIO: 1:2.0
+2025-10-03 01:41:45 - trading_bot - INFO -    PROFIT DISTRIBUTION:
+2025-10-03 01:41:45 - trading_bot - INFO -      - TP1: 1.0% profit - Close 30.0% position
+2025-10-03 01:41:45 - trading_bot - INFO -      - TP2: 2.0% profit - Close 25.0% position
+2025-10-03 01:41:45 - trading_bot - INFO -      - TP3: 3.0% profit - Close 25.0% position
+2025-10-03 01:41:45 - trading_bot - INFO -      - Trailing: 20.0% position with 1.0% trailing
+2025-10-03 01:41:45 - trading_bot - INFO -    TRAILING STOP: Activates after TP3, follows price with 1% distance
+2025-10-03 01:41:45 - trading_bot - INFO -    Symbols: 14
+2025-10-03 01:41:45 - trading_bot - INFO -    Dry Run: True
+2025-10-03 01:41:45 - trading_bot - INFO -    Binance Connected: True
+2025-10-03 01:41:45 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for SOLUSDT
+2025-10-03 01:41:45 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for SOLUSDT
+2025-10-03 01:41:46 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for BNBUSDT
+2025-10-03 01:41:46 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for BNBUSDT
+2025-10-03 01:41:47 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for BTCUSDT
+2025-10-03 01:41:47 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for BTCUSDT
+2025-10-03 01:41:48 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for ETHUSDT
+2025-10-03 01:41:48 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for ETHUSDT
+2025-10-03 01:41:49 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for XRPUSDT
+2025-10-03 01:41:49 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for XRPUSDT
+2025-10-03 01:41:50 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for ADAUSDT
+2025-10-03 01:41:50 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for ADAUSDT
+2025-10-03 01:41:51 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for DOGEUSDT
+2025-10-03 01:41:51 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for DOGEUSDT
+2025-10-03 01:41:52 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for PEPEUSDT
+2025-10-03 01:41:52 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for PEPEUSDT
+2025-10-03 01:41:53 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for LINKUSDT
+2025-10-03 01:41:53 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for LINKUSDT
+2025-10-03 01:41:54 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for XLMUSDT
+2025-10-03 01:41:54 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for XLMUSDT
+2025-10-03 01:41:55 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for AVAXUSDT
+2025-10-03 01:41:55 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for AVAXUSDT
+2025-10-03 01:41:56 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for DOTUSDT
+2025-10-03 01:41:56 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for DOTUSDT
+2025-10-03 01:41:57 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for OPUSDT
+2025-10-03 01:41:57 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for OPUSDT
+2025-10-03 01:41:58 - trading_bot - INFO - 🚀 Starting FRESH CROSSOVER strategy for TRXUSDT
+2025-10-03 01:41:58 - trading_bot - INFO - ✅ Started FRESH CROSSOVER bot for TRXUSDT
+2025-10-03 01:41:59 - trading_bot - INFO - ✅ Started 14 trading bots with FRESH CROSSOVER Strategy
+2025-10-03 01:41:59 - trading_bot - INFO - 🌐 Starting FastAPI server on http://0.0.0.0:8000
+2025-10-03 01:41:59 - trading_bot - INFO - ⏳ Trading Bot is now ACTIVE with FRESH CROSSOVER SYSTEM...
+2025-10-03 01:41:59 - trading_bot - INFO - 📍 Use Ctrl+C to stop the bot
