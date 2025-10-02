@@ -1,0 +1,16 @@
+{
+  "open_trades": {},
+  "stats": {
+    "long": {
+      "total": 0,
+      "success": 0,
+      "fail": 0
+    },
+    "short": {
+      "total": 0,
+      "success": 0,
+      "fail": 0
+    }
+  },
+  "trade_history": []
+}

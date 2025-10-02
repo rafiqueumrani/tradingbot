@@ -1,0 +1,3 @@
+Trade #,Symbol,Side,Type,Date/Time,Signal,Price,Position size,Net P&L,Run-up,Drawdown,Cumulative P&L
+1,XRP,LONG,XRPUSDT LONG,"Oct 02, 2025, 18:54",Entry,2.98670000,500.00 USDT,,,,
+1,XRP,LONG,XRPUSDT LONG,"Oct 02, 2025, 19:54",Exit (SL),2.95600000,167.408846 (494.86 USDT),-5.14 USDT,0,0,-5.14
