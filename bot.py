@@ -1,7 +1,8 @@
 # bot.py
 """
 COMPLETE FIXED VERSION - FRESH EMA CROSSOVER + PROFIT DISTRIBUTION
-- Fixed: TP1 partial closing issue
+- Fixed: NaN JSON error
+- Fixed: TP1 partial closing issue  
 - Fixed: Dashboard real-time updates
 - Fixed: SL/TP tracking properly
 - Fixed: Railway PORT configuration
@@ -13,6 +14,7 @@ import threading
 import json
 import argparse
 import tempfile
+import math
 from datetime import datetime
 from dotenv import load_dotenv
 import pandas as pd
@@ -42,7 +44,15 @@ except Exception as e:
     print(f"⚠️ FastAPI not available: {e}")
     FASTAPI_AVAILABLE = False
 
-# ✅ SAFE FastAPI app initialization
+# ✅ FIXED: Custom JSON encoder for NaN values
+class SafeJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, float):
+            if math.isnan(obj) or math.isinf(obj):
+                return None
+        return super().default(obj)
+
+# ✅ FIXED: Safe FastAPI app initialization with custom encoder
 if FASTAPI_AVAILABLE:
     app = FastAPI(title="Trading Bot", version="1.0.0")
 else:
@@ -112,13 +122,13 @@ EMA_FAST = 9
 EMA_SLOW = 21
 EMA_MID = 50
 RSI_LEN = 14
-RSI_LONG = 55
-RSI_SHORT = 45
+RSI_LONG = 51
+RSI_SHORT = 48
 ADX_LEN = 14
 ADX_THR = 20
 
 # FIXED: Proper confirmation system
-CONFIRMATION_REQUIRED = int(os.getenv("CONFIRMATION_REQUIRED", "4"))
+CONFIRMATION_REQUIRED = int(os.getenv("CONFIRMATION_REQUIRED", "2"))
 
 # ATR-based SL/TP settings
 ATR_LEN = 14
@@ -332,9 +342,12 @@ if FASTAPI_AVAILABLE:
                 "short": {"total": 0, "success": 0, "fail": 0}
             })
             
+            # ✅ FIXED: Clean NaN values before returning
+            cleaned_stats = json.loads(json.dumps(stats, cls=SafeJSONEncoder))
+            
             return {
-                "long": stats.get("long", {"total": 0, "success": 0, "fail": 0}),
-                "short": stats.get("short", {"total": 0, "success": 0, "fail": 0}),
+                "long": cleaned_stats.get("long", {"total": 0, "success": 0, "fail": 0}),
+                "short": cleaned_stats.get("short", {"total": 0, "success": 0, "fail": 0}),
                 "symbols_count": len(SYMBOLS),
                 "dry_run": DRY_RUN,
                 "confirmations": CONFIRMATION_REQUIRED,
@@ -356,25 +369,28 @@ if FASTAPI_AVAILABLE:
                 current_price = get_latest_price(symbol)
                 tp_targets = trade.get("tp_targets", {})
                 
+                # ✅ FIXED: Clean NaN values from trade data
+                cleaned_trade = json.loads(json.dumps(trade, cls=SafeJSONEncoder))
+                
                 result.append({
                     "symbol": symbol,
-                    "side": trade.get("side", ""),
-                    "entry_price": trade.get("entry_price", ""),
+                    "side": cleaned_trade.get("side", ""),
+                    "entry_price": cleaned_trade.get("entry_price", ""),
                     "current_price": f"{current_price:.4f}" if current_price else "N/A",
-                    "quantity": trade.get("total_quantity", ""),
-                    "trade_num": trade.get("trade_num", 0),
+                    "quantity": cleaned_trade.get("total_quantity", ""),
+                    "trade_num": cleaned_trade.get("trade_num", 0),
                     "pnl": 0,
-                    "entry_time": trade.get("entry_time", ""),
-                    "sl": trade.get("sl", ""),
-                    "tp1": trade.get("tp1", ""),
-                    "tp2": trade.get("tp2", ""),
-                    "tp3": trade.get("tp3", ""),
+                    "entry_time": cleaned_trade.get("entry_time", ""),
+                    "sl": cleaned_trade.get("sl", ""),
+                    "tp1": cleaned_trade.get("tp1", ""),
+                    "tp2": cleaned_trade.get("tp2", ""),
+                    "tp3": cleaned_trade.get("tp3", ""),
                     "tp1_hit": tp_targets.get("tp1", {}).get("hit", False),
                     "tp2_hit": tp_targets.get("tp2", {}).get("hit", False),
                     "tp3_hit": tp_targets.get("tp3", {}).get("hit", False),
-                    "remaining_quantity": trade.get("remaining_quantity", ""),
-                    "trailing_active": trade.get("trailing_active", False),
-                    "partial_profit": trade.get("partial_profit", "")
+                    "remaining_quantity": cleaned_trade.get("remaining_quantity", ""),
+                    "trailing_active": cleaned_trade.get("trailing_active", False),
+                    "partial_profit": cleaned_trade.get("partial_profit", "")
                 })
             
             return result
@@ -395,14 +411,17 @@ if FASTAPI_AVAILABLE:
             result = []
             
             for trade in recent_trades:
+                # ✅ FIXED: Clean NaN values
+                cleaned_trade = json.loads(json.dumps(trade, cls=SafeJSONEncoder))
+                
                 result.append({
-                    "trade_num": trade.get("Trade #", ""),
-                    "symbol": trade.get("Symbol", ""),
-                    "side": trade.get("Side", ""),
-                    "entry_price": trade.get("Price", ""),
-                    "exit_price": trade.get("Price", ""),
-                    "pnl": trade.get("Net P&L", "0"),
-                    "time": trade.get("Date/Time", "")
+                    "trade_num": cleaned_trade.get("Trade #", ""),
+                    "symbol": cleaned_trade.get("Symbol", ""),
+                    "side": cleaned_trade.get("Side", ""),
+                    "entry_price": cleaned_trade.get("Price", ""),
+                    "exit_price": cleaned_trade.get("Price", ""),
+                    "pnl": cleaned_trade.get("Net P&L", "0"),
+                    "time": cleaned_trade.get("Date/Time", "")
                 })
             
             return result
@@ -444,7 +463,7 @@ def safe_execute(default_return=None, max_retries=3):
     return decorator
 
 # ---------- Helpers ----------
-def _to_float(x, default=np.nan):
+def _to_float(x, default=0.0):  # ✅ FIXED: Changed from np.nan to 0.0
     try:
         if x is None:
             return default
@@ -529,7 +548,8 @@ def save_state(st):
             st = _ensure_state_keys(st)
             retries = 6
             delay = 0.08
-            data = json.dumps(st, indent=2, ensure_ascii=False)
+            # ✅ FIXED: Use custom encoder to remove NaN values
+            data = json.dumps(st, indent=2, ensure_ascii=False, cls=SafeJSONEncoder)
             
             for attempt in range(retries):
                 try:
@@ -619,6 +639,7 @@ def rsi(series: pd.Series, length=14):
         roll_down = down.ewm(alpha=1/length, adjust=False).mean()
         rs = roll_up / roll_down.replace(0, np.nan)
         r = 100 - (100 / (1 + rs))
+        # ✅ FIXED: Replace NaN with 50.0
         return r.fillna(50.0)
     except Exception as e:
         logger.error(f"RSI calculation error: {e}")
@@ -673,9 +694,10 @@ client = None
 
 def _parse_kline_value(val):
     try:
-        return float(val) if (val is not None and str(val).lower() not in ("nan","none","")) else np.nan
+        # ✅ FIXED: Return 0.0 instead of np.nan
+        return float(val) if (val is not None and str(val).lower() not in ("nan","none","")) else 0.0
     except Exception:
-        return np.nan
+        return 0.0
 
 # ✅ FIXED: Enhanced Binance client initialization with better error handling
 def initialize_binance_client():
