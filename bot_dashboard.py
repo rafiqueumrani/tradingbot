@@ -704,11 +704,13 @@ def dashboard():
             
             /* TOP SECTION - Fixed height, no scroll */
             .dashboard-top {{
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                height: 280px;  /* Reduced height to make space for trade history */
-                flex-shrink: 0;
+                    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    height: auto;     /* ✅ AUTO HEIGHT */
+    min-height: 300px;
+    flex-shrink: 0;
+    overflow: hidden; /* ✅ NO SCROLL */
             }}
             
             .left-panel {{
@@ -763,6 +765,7 @@ def dashboard():
                 display: flex;
                 flex-direction: column;
                 min-height: 0;
+		overflow: hidden;
             }}
             
             .section h3 {{
@@ -778,18 +781,20 @@ def dashboard():
             .positions-grid {{
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 8px;
-                overflow-y: auto;
+                gap: 6px;
+                overflow: visible;
                 flex: 1;
                 padding: 3px;
+		max-height: none;
             }}
             
             .position-card {{
                 border: 1px solid #e5e7eb;
                 border-radius: 5px;
-                padding: 8px;
+                padding: 6px;
                 background: #fafafa;
-                min-height: 180px;
+                min-height: 150px;
+		font-size: 0.7em;
             }}
             
             .position-header {{
@@ -808,15 +813,17 @@ def dashboard():
             .side.short {{ color: var(--danger); }}
             
             .position-details div {{
-                margin: 2px 0;
-                font-size: 0.75em;
+                margin: 1px 0;
+                font-size: 0.65em;
             }}
             
             .tp-levels {{
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 2px;
+                gap: 1px;
                 margin: 6px 0;
+		margin: 4px 0;
+		padding: 2px;
                 padding: 4px;
                 background: #f8fafc;
                 border-radius: 3px;
@@ -836,7 +843,7 @@ def dashboard():
             }}
             
             .tp-value {{
-                font-size: 0.7em;
+                font-size: 0.65em;
                 font-weight: bold;
                 color: #1e293b;
             }}
@@ -975,8 +982,9 @@ def dashboard():
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                min-height: 0;
-                height: calc(100vh - 400px); /* Increased height for trade history */
+                min-height: 300px;
+		max-height: 50vh;
+                
             }}
             
             .trade-history-container {{
@@ -984,7 +992,7 @@ def dashboard():
                 overflow: auto;
                 border: 1px solid #e5e7eb;
                 border-radius: 5px;
-                max-height: none;
+                
             }}
             
             .trade-table {{
