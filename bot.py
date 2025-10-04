@@ -111,25 +111,25 @@ TRADE_USDT = float(os.getenv("TRADE_USDT", 50.0))
 PORT = int(os.getenv("PORT", 8000))
 
 # ✅ LOOSENED INDICATOR PARAMETERS
-EMA_FAST = 9      # Reduced from 9
-EMA_SLOW = 21     # Reduced from 21  
-EMA_MID = 50      # Reduced from 50 - MAJOR IMPROVEMENT
+EMA_FAST = 7      # Reduced from 9
+EMA_SLOW = 18     # Reduced from 21  
+EMA_MID = 25      # Reduced from 50 - MAJOR IMPROVEMENT
 RSI_LEN = 14
-RSI_LONG = 55     # Reduced from 51 - MUCH EASIER
-RSI_SHORT = 45    # Changed from 48 - MORE REALISTIC
+RSI_LONG = 45     # Reduced from 51 - MUCH EASIER
+RSI_SHORT = 44    # Changed from 48 - MORE REALISTIC
 ADX_LEN = 14
-ADX_THR = 20      # Reduced from 20 - MORE SIGNALS
+ADX_THR = 15      # Reduced from 20 - MORE SIGNALS
 
 # ✅ ONLY 1 CONFIRMATION NEEDED
-CONFIRMATION_REQUIRED = 4
+CONFIRMATION_REQUIRED = 2
 
 ATR_LEN = 14
-ATR_SL_MULT = 2.0  # Reduced from 2.0
+ATR_SL_MULT = 1.5  # Reduced from 2.0
 
 RISK_REWARD_RATIO = 2.0
-TP1_PERCENT = 0.01   # Reduced from 0.01
-TP2_PERCENT = 0.02   # Reduced from 0.02  
-TP3_PERCENT = 0.03   # Reduced from 0.03
+TP1_PERCENT = 0.008   # Reduced from 0.01
+TP2_PERCENT = 0.005   # Reduced from 0.02  
+TP3_PERCENT = 0.004   # Reduced from 0.03
 
 TP1_CLOSE_PERCENT = 0.35
 TP2_CLOSE_PERCENT = 0.30  
@@ -139,7 +139,7 @@ TRAILING_PERCENT = 0.15
 TRAILING_ACTIVATION_PERCENT = 0.025
 TRAILING_DISTANCE_PERCENT = 0.008
 
-TRADE_COOLDOWN = 1800  # Reduced from 1800 to 15 minutes
+TRADE_COOLDOWN = 900  # Reduced from 1800 to 15 minutes
 
 SYMBOLS = [
     "SOLUSDT","BNBUSDT","BTCUSDT","ETHUSDT","XRPUSDT","ADAUSDT","DOGEUSDT",
